@@ -87,8 +87,8 @@ def pdf_to_jpg(pdf_path, output_folder):
             images.append(image_array)
 
             # Save the image using OpenCV
-            jpg_path = os.path.join(output_folder, f"page_{page_number + 1}.jpg")
-            cv2.imwrite(jpg_path, cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR))
+            # jpg_path = os.path.join(output_folder, f"page_{page_number + 1}.jpg")
+            # cv2.imwrite(jpg_path, cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR))
     else:
         page = pdf_document[len(pdf_document)]
         px = page.get_pixmap()
@@ -96,8 +96,8 @@ def pdf_to_jpg(pdf_path, output_folder):
             px.samples, dtype=np.uint8).reshape(px.h, px.w, px.n)
         images.append(image_array)
 
-        jpg_path = os.path.join(output_folder, "page_1.jpg")
-        cv2.imwrite(jpg_path, cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR))
+        # jpg_path = os.path.join(output_folder, "page_1.jpg")
+        # cv2.imwrite(jpg_path, cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR))
 
     # Close the PDF file
     pdf_document.close()
@@ -131,7 +131,7 @@ def image_to_text(OCR_path, *args):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[69:70]):
+            for _, images in enumerate(arg[192:193]):
                 # images = image[35:38]
 
                 # img_array = img
@@ -147,6 +147,7 @@ def image_to_text(OCR_path, *args):
 
                 # Split the text into lines
                 lines = text.split('\n')
+                # print(lines)
 
                 date_pattern = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|' \
                                r'\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{2,4}|' \
@@ -179,11 +180,15 @@ def image_to_text(OCR_path, *args):
                 unstruct_data = []
                 prev_lookup = []
                 for word_list in lines:
+                    print(word_list)
                     num_list = re.findall(num_pattern, word_list)
+                    # print(num_list)
                     num_list = [num.replace(',', '') for num in num_list]
+                    # print("Num replace list",num_list)
                     num_list = [
                         float(number.replace('(', '').replace(')', '')) * (-1) if '(' in number else float(number) for
                         number in num_list]
+                    print("Num replace list after", num_list)
                     word_list = re.sub(pattern, '', word_list)
                     word_list = word_list.split()
                     label = "_".join(
@@ -191,12 +196,13 @@ def image_to_text(OCR_path, *args):
                     # print(num_list)
                     if len(num_list) != 0:
                         num_list = list(map(keep_int_or_float, num_list))
-                        print("Num list",num_list)
+                        print("Num list", num_list)
+
                         if all(isinstance(x, int) for x in num_list):
                             if all((x >= datetime.datetime.today().year - 6 and x <= datetime.datetime.today().year) for
                                    x in num_list):
                                 year_list = num_list
-                                print("Year list inside the loop:",year_list)
+                                print("Year list inside the loop:", year_list)
                         unstruct_data.append({label: num_list})
 
                     for duration in duration_keywords:
@@ -339,25 +345,25 @@ def image_to_text(OCR_path, *args):
 
                 # print(final_json)
 
-                image = cv2.resize(images, None, fx=0.48, fy=0.35)
-                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                threshold_img = cv2.adaptiveThreshold(
-                    gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
-                cv2.imshow('Grayscale', threshold_img)
-                cv2.imwrite('bhel_bs.jpeg', threshold_img)
-                cv2.waitKey(0)
-
-                # Window shown waits for any key pressing event
-                cv2.destroyAllWindows()
+                # image = cv2.resize(images, None, fx=0.48, fy=0.35)
+                # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                # threshold_img = cv2.adaptiveThreshold(
+                #     gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
+                # cv2.imshow('Grayscale', threshold_img)
+                # cv2.imwrite('bhel_bs.jpeg', threshold_img)
+                # cv2.waitKey(0)
+                #
+                # # Window shown waits for any key pressing event
+                # cv2.destroyAllWindows()
 
         print(master_list)
         return master_list
 
 
 #
-# pdf_file = "AMZN.pdf"  # Replace with your PDF file path
-# path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
-# output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
-# img = pdf_to_jpg(pdf_file,output_folder)
+pdf_file = "bhel.pdf"  # Replace with your PDF file path
+path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
+output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
+img = pdf_to_jpg(pdf_file, output_folder)
 # #
-# (image_to_text(path_ocr, img))
+(image_to_text(path_ocr, img))

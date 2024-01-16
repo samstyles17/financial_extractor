@@ -58,7 +58,7 @@ def image_to_text(OCR_path, *args):
             pytesseract.pytesseract.tesseract_cmd = OCR_path
             final_json = {}
             master_list = []
-            for _, images in enumerate(arg[69:70]):
+            for _, images in enumerate(arg[192:193]):
                 image = cv2.resize(images, None, fx=0.625, fy=0.625)
                 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -97,8 +97,8 @@ def image_to_text(OCR_path, *args):
                 years = re.findall(year_pattern, text)
                 print("All the years in the text:\n", years)
 
-                # num_pattern = r'[-+]?\d{1,5}(?:,?\d{3})*(?:\.\d+)?|\(\s*[-+]?\d{1,3}(?:,?\d{3})*(?:\.\d+)?\s*\)'
-                num_pattern = r'(?:\b\d{1,5}(?:,?\d{3})*(?:\.\d+)?\b|\b(?:19\d{2}|20\d{2})\b)'
+                num_pattern = r'[-+]?\d{1,5}(?:,?\d{3})*(?:\.\d+)?|\(\s*[-+]?\d{1,3}(?:,?\d{3})*(?:\.\d+)?\s*\)'
+                # num_pattern = r'(?:\b\d{1,5}(?:,?\d{3})*(?:\.\d+)?\b|\b(?:19\d{2}|20\d{2})\b)'
                 pattern = r'[,:()\-]'
                 year_list = None
                 unstruct_data = []
