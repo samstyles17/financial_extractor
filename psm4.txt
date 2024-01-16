@@ -1,0 +1,55 @@
+WUT SOT
+
+affes
+Standalone Balance Sheet as at march 31, 2023
+@ in Crore)
+[Note|Page]  Asat March 31,2023, | Asat March 31,2022 |
+A. ASSETS
+1. Non-current assets | |
+{a) Property, plant and equipment 3a =. 203 2408.74 2336.34
+(b) Capital work-in-progress 3b 203 344.59 422.32
+{c) Intangible assets 4a 204 67.24 62.12
+{d) Intangible assets under development 4b 204 9.26 8.66
+{e) Financial assets
+(i) Investments 5 212 669.54 669.71
+(ii) Trade receivables 6 213 3415.54 3203.84
+(iii) Other financial assets 7 215 83.96 4169.04 86.73 3960.28
+(f) Deferred tax assets (net of liabilities) 8 216 3422.62 3530.08
+(9) Other non-currentassets re 193001 ccccceceeeeenen 18526,54.
+Total non-current assets 29721.63 28846.34
+‘2.Currentassets
+{a) Inventories 10 0=—.218 6755.90 6560.21
+{b) Financial assets |
+(i) Trade receivables 6 213 3128.35 3024.75
+(ii) Cash and cash equivalents 41 219 1560.52 732.62
+(iii) Bank balances other than cash and 12 219 5082.06 6421.07
+cash equivalents |
+{iv) Other financial assets 7 215 278.23 10049.16 211.56 10390.00
+(c) Current tax assets (net) 13 «219 226.38 119.24
+wa (@) Other current assets | 1305084 cece 10792.53_
+Total current assets 30082.28 27861.98
+TOTAL ASSETS 59803.91 56708.32
+‘BEQUITYANDLIABILITIES. S—~—S——S—S
+3. Equity
+(a) Equity share capital 14 220 696.41 696.41
+
+(b) Other equity
+
+“4. Liabilities
+4.1 Non-current liabilities
+(a) Financial liabilities
+
+(i) Lease Liabilities 16 221 33.75 35.12
+(ii) Trade payables 17 222
+(i) Total outstanding dues of micro 128.11 127.45
+enterprises and small enterprises
+(ii) Total outstanding dues of creditors 2065.92 2004.48
+
+other than micro enterprises and
+
+small enterprises
+(iii) Other financial liabilities 18 224 255.70 2483.48 215.10 2382.15
+(b) Provisions 19 224 4101.02 3771.21
+{c) Other non-current liabilities 20 224 2605.81 2212.65
+
+190 BHARAT HEAVY ELECTRICALS LIMITED
