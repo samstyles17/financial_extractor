@@ -11,13 +11,12 @@ import os
 from openpyxl import load_workbook
 from PIL import ImageDraw, Image, ImageFont
 
-
-new_height = 3000
-new_width = 4100
+new_height = 3500
+new_width = 4500
 
 
 def xlstoxlsx(input_directory, output_directory):
-    xls_data = pd.read_excel(input_directory,sheet_name=None)
+    xls_data = pd.read_excel(input_directory, sheet_name=None)
     with pd.ExcelWriter(output_directory) as writer:
         for sheet_name, df in xls_data.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
@@ -64,6 +63,9 @@ def excelToImage(file_name):
 
     return image_list
 
+def enhance_image(image_array, alpha=1.5, beta=30):
+    enhanced_image = cv2.convertScaleAbs(image_array, alpha=alpha, beta=beta)
+    return enhanced_image
 
 def pdf_to_jpg(pdf_path, output_folder):
     # Open the PDF file
@@ -84,7 +86,9 @@ def pdf_to_jpg(pdf_path, output_folder):
             image_array = np.frombuffer(
                 px.samples, dtype=np.uint8).reshape(px.h, px.w, px.n)
 
-            images.append(image_array)
+            enhanced_image = enhance_image(image_array)
+
+            images.append(enhanced_image)
 
             # Save the image using OpenCV
             # jpg_path = os.path.join(output_folder, f"page_{page_number + 1}.jpg")
@@ -131,34 +135,50 @@ def image_to_text(OCR_path, *args):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[192:193]):
+            for _, images in enumerate(arg[260:261]):
                 # images = image[35:38]
 
                 # img_array = img
-                image = cv2.resize(images, None, fx=0.625, fy=0.625)
-                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-                threshold_img = cv2.adaptiveThreshold(
-                    gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
+                # image = cv2.resize(images, None, fx=0.625, fy=0.625)
+                # gray_image = cv2.cvtColor(images, cv2.COLOR_BGR2GRAY)
+                #
+                # threshold_img = cv2.adaptiveThreshold(
+                #     gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
 
                 # Perform OCR to extract text from the image
                 text = pytesseract.image_to_string(
-                    threshold_img, config=r'--psm 4')
+                    images, config=r'--psm 4')
 
                 # Split the text into lines
                 lines = text.split('\n')
                 # print(lines)
 
-                date_pattern = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|' \
+                """date_pattern = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|' \
                                r'\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{2,4}|' \
-                               r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2})\b'  # For Months seperation
+                               r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2})\b'  # For Months separation """
 
+
+                date_pattern = r'\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|' \
+                               r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-zA-Z.,-]*[\s-]?\d{1,2}?[,\s-]?[\s]?\d{4}|' \
+                               r'\d{1,2}[/-]\d{4}|\d{4})\b'
+                # years_extracted = []
                 dates = re.findall(date_pattern, text)
+                print(dates)
                 supp_dates = []
                 for date in dates:
                     if bool(re.search(r'[a-zA-Z]', date)) and bool(re.search(r'\d', date)):
                         supp_dates.append(date)
-
+                #     elif bool(re.search(r'\d{4}', date)) or :
+                #         years_extracted.append(date)
+                #
+                # final_year_list = []
+                # for year in years_extracted:
+                #     year = int(year)
+                #     if datetime.datetime.today().year -6 <= year <= datetime.datetime.today().year:
+                #         final_year_list.append(year)
+                print("Dates in supp_dates:", supp_dates)
+                # print("Extracted years:", years_extracted)
+                # print("Final year list:",final_year_list)
                 duration_keywords = ['months', 'days', 'years']
 
                 # For keeping value type as is for the numerals
@@ -182,13 +202,13 @@ def image_to_text(OCR_path, *args):
                 for word_list in lines:
                     print(word_list)
                     num_list = re.findall(num_pattern, word_list)
-                    # print(num_list)
+                    # print("Initial num list:", num_list)
                     num_list = [num.replace(',', '') for num in num_list]
-                    # print("Num replace list",num_list)
+                    #                     print("Num replace list after comma:", num_list)
                     num_list = [
-                        float(number.replace('(', '').replace(')', '')) * (-1) if '(' in number else float(number) for
-                        number in num_list]
-                    print("Num replace list after", num_list)
+                        str(float(number.replace('(', '').replace(')', '')) * (-1)) if '(' in number else str(number)
+                        for number in num_list]
+                    #                     print("Num replace list after (): ", num_list)
                     word_list = re.sub(pattern, '', word_list)
                     word_list = word_list.split()
                     label = "_".join(
@@ -196,13 +216,13 @@ def image_to_text(OCR_path, *args):
                     # print(num_list)
                     if len(num_list) != 0:
                         num_list = list(map(keep_int_or_float, num_list))
-                        print("Num list", num_list)
+                        #                         print("Num list after mapping", num_list)
 
                         if all(isinstance(x, int) for x in num_list):
                             if all((x >= datetime.datetime.today().year - 6 and x <= datetime.datetime.today().year) for
                                    x in num_list):
                                 year_list = num_list
-                                print("Year list inside the loop:", year_list)
+                                # print("Year list inside the loop:", year_list)
                         unstruct_data.append({label: num_list})
 
                     for duration in duration_keywords:
@@ -230,7 +250,7 @@ def image_to_text(OCR_path, *args):
                 #         if word in month_mapping.keys():
                 #             total_months.append(month_mapping[word])
                 #     return total_months
-                print(unstruct_data)
+                # print(unstruct_data)
                 month_num = []
                 for looks in prev_lookup:
                     for lk in [look for look in looks.split('_')]:
@@ -273,7 +293,7 @@ def image_to_text(OCR_path, *args):
                                     resultant.extend([prev_date + '-' + datestring])
 
                 resultant.sort()
-                print("Year List:", year_list)
+                # print("Year List:", year_list)
                 if len(month_num) != 0 and len(resultant) > 0:
                     for dictionaries in unstruct_data:
                         for key in dictionaries.keys():
@@ -345,23 +365,23 @@ def image_to_text(OCR_path, *args):
 
                 # print(final_json)
 
-                # image = cv2.resize(images, None, fx=0.48, fy=0.35)
-                # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                # threshold_img = cv2.adaptiveThreshold(
-                #     gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
-                # cv2.imshow('Grayscale', threshold_img)
-                # cv2.imwrite('bhel_bs.jpeg', threshold_img)
-                # cv2.waitKey(0)
-                #
-                # # Window shown waits for any key pressing event
-                # cv2.destroyAllWindows()
+                image = cv2.resize(images, None, fx=0.48, fy=0.35)
+                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                threshold_img = cv2.adaptiveThreshold(
+                    gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
+                cv2.imshow('Grayscale', threshold_img)
+                cv2.imwrite('bhel_bs.jpeg', threshold_img)
+                cv2.waitKey(0)
 
-        print(master_list)
+                # Window shown waits for any key pressing event
+                cv2.destroyAllWindows()
+
+        # print(master_list)
         return master_list
 
 
 #
-pdf_file = "bhel.pdf"  # Replace with your PDF file path
+pdf_file = "tcs.pdf"  # Replace with your PDF file path
 path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
 output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
 img = pdf_to_jpg(pdf_file, output_folder)
