@@ -63,9 +63,11 @@ def excelToImage(file_name):
 
     return image_list
 
+
 def enhance_image(image_array, alpha=1.5, beta=30):
     enhanced_image = cv2.convertScaleAbs(image_array, alpha=alpha, beta=beta)
     return enhanced_image
+
 
 def pdf_to_jpg(pdf_path, output_folder):
     # Open the PDF file
@@ -109,19 +111,26 @@ def pdf_to_jpg(pdf_path, output_folder):
     return images
 
 
+def extract_years_from_dates(date_list):
+    years = set()
+    year_pattern = re.compile(r'\b\d{4}\b')
+
+    current_year = datetime.datetime.today().year
+
+    for date_str in date_list:
+        year_matches = re.findall(year_pattern, date_str)
+        for year in year_matches:
+            year_int = int(year)
+            if current_year - 5 <= year_int <= current_year:
+                years.add(year)
+
+    return list(years)
+
+
 def image_to_text(OCR_path, *args):
-    # statements={
-    #     'income_statement':income_statement,
-    #     'cash_flow_statement':cash_flow_statement,
-    #     'balance_sheet':balance_sheet
-    # }
+
     for arg in args:
-        # statement_type = f"statement_{idx}"
-        # print(f"Processing image {idx + 1}/{len(args)} as {statement_type}")
-        # print("Data Type for args:", type(args))
-        # print("Data type for idx", type(idx))
-        # print("Data type for images", type(images))
-        # print(type(images))
+
         if not isinstance(arg, list):
             raise TypeError("Input parameter must be a list of numpy arrays.")
 
@@ -129,14 +138,10 @@ def image_to_text(OCR_path, *args):
 
             pytesseract.pytesseract.tesseract_cmd = OCR_path
 
-            # f = open('terminology.json')
-            # datas = json.load(f)
-            # temp = {}
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[260:261]):
-                # images = image[35:38]
+            for _, images in enumerate(arg[64:65]):
 
                 # img_array = img
                 # image = cv2.resize(images, None, fx=0.625, fy=0.625)
@@ -148,37 +153,34 @@ def image_to_text(OCR_path, *args):
                 # Perform OCR to extract text from the image
                 text = pytesseract.image_to_string(
                     images, config=r'--psm 4')
+                # print("Text extracted from OCR:\n", text)
 
                 # Split the text into lines
                 lines = text.split('\n')
                 # print(lines)
 
-                """date_pattern = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|' \
+                date_pattern = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|' \
                                r'\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{2,4}|' \
                                r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2})\b'  # For Months separation """
 
+                date_pattern2 = r'\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|' \
+                                r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-zA-Z.,-]*[\s-]?\d{1,2}?[,\s-]?[\s]?\d{4}|' \
+                                r'\d{1,2}[/-]\d{4}|\d{4})\b'
 
-                date_pattern = r'\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|' \
-                               r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-zA-Z.,-]*[\s-]?\d{1,2}?[,\s-]?[\s]?\d{4}|' \
-                               r'\d{1,2}[/-]\d{4}|\d{4})\b'
-                # years_extracted = []
-                dates = re.findall(date_pattern, text)
-                print(dates)
+                dates = []
+                for values in lines:
+                    if re.findall(date_pattern, values):
+                        dates.append(values)
+
+                # dates = re.findall(date_pattern, text)
+                print("Dates extracted:", dates)
                 supp_dates = []
                 for date in dates:
                     if bool(re.search(r'[a-zA-Z]', date)) and bool(re.search(r'\d', date)):
                         supp_dates.append(date)
-                #     elif bool(re.search(r'\d{4}', date)) or :
-                #         years_extracted.append(date)
-                #
-                # final_year_list = []
-                # for year in years_extracted:
-                #     year = int(year)
-                #     if datetime.datetime.today().year -6 <= year <= datetime.datetime.today().year:
-                #         final_year_list.append(year)
+
                 print("Dates in supp_dates:", supp_dates)
-                # print("Extracted years:", years_extracted)
-                # print("Final year list:",final_year_list)
+
                 duration_keywords = ['months', 'days', 'years']
 
                 # For keeping value type as is for the numerals
@@ -199,8 +201,9 @@ def image_to_text(OCR_path, *args):
                 year_list = None
                 unstruct_data = []
                 prev_lookup = []
+                i = 0
                 for word_list in lines:
-                    print(word_list)
+                    # print(word_list)
                     num_list = re.findall(num_pattern, word_list)
                     # print("Initial num list:", num_list)
                     num_list = [num.replace(',', '') for num in num_list]
@@ -222,8 +225,18 @@ def image_to_text(OCR_path, *args):
                             if all((x >= datetime.datetime.today().year - 6 and x <= datetime.datetime.today().year) for
                                    x in num_list):
                                 year_list = num_list
-                                # print("Year list inside the loop:", year_list)
+                                print("Year list inside the loop:", year_list)
+                        elif year_list is None:
+                            dates2 = []
+                            for values in lines:
+                                if re.findall(date_pattern2, values):
+                                    dates2.append(values)
+                            year_list = extract_years_from_dates(dates2)
+                            print("Year list inside the loop in else condition:", year_list)
+
                         unstruct_data.append({label: num_list})
+                        # print(f"Unstruct Data {i+1} after year list if-else", unstruct_data)
+                        # i+=1
 
                     for duration in duration_keywords:
                         if duration in [item.lower() for item in word_list]:
@@ -234,23 +247,7 @@ def image_to_text(OCR_path, *args):
                             else:
                                 prev_lookup.append(label)
 
-                # def months_to_digits(months_text):
-                #     month_mapping = {
-                #         "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
-                #         "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12
-                #     }
 
-                #     words = months_text.split('_')
-
-                #     # Initialize a variable to store the total number of months
-                #     total_months = []
-
-                #     # Sum up the numeric values of the words corresponding to months
-                #     for word in set(words):
-                #         if word in month_mapping.keys():
-                #             total_months.append(month_mapping[word])
-                #     return total_months
-                # print(unstruct_data)
                 month_num = []
                 for looks in prev_lookup:
                     for lk in [look for look in looks.split('_')]:
@@ -260,60 +257,62 @@ def image_to_text(OCR_path, *args):
                             pass
 
                 resultant = []
-                if len(month_num) != 0:
-                    month_num.sort()
-                    for year in set(year_list):
-                        for month in set(supp_dates):
-                            datestring = month + ', ' + str(year)
-                            date_obj = datetime.datetime.strptime(
-                                datestring, '%B %d, %Y')
-                            for nums in month_num:
-                                if nums == 3:
-                                    prev_date = date_obj - \
-                                                datetime.timedelta(nums * 30)
-                                    prev_date = prev_date.strftime("%b, %Y")
-                                    resultant.append(prev_date + '-' + datestring)
-
-                                if nums == 6:
-                                    prev_date = date_obj - \
-                                                datetime.timedelta(nums * 30)
-                                    prev_date = prev_date.strftime("%b, %Y")
-                                    resultant.extend([prev_date + '-' + datestring])
-
-                                if nums == 9:
-                                    prev_date = date_obj - \
-                                                datetime.timedelta(nums * 30)
-                                    prev_date = prev_date.strftime("%b, %Y")
-                                    resultant.extend([prev_date + '-' + datestring])
-
-                                if nums == 12:
-                                    prev_date = date_obj - \
-                                                datetime.timedelta(nums * 30)
-                                    prev_date = prev_date.strftime("%b, %Y")
-                                    resultant.extend([prev_date + '-' + datestring])
+                # if len(month_num) != 0:
+                #     month_num.sort()
+                #     for year in set(year_list):
+                #         for month in set(supp_dates):
+                #             datestring = month + ', ' + str(year)
+                #             date_obj = datetime.datetime.strptime(
+                #                 datestring, '%B %d, %Y')
+                #             for nums in month_num:
+                #                 if nums == 3:
+                #                     prev_date = date_obj - \
+                #                                 datetime.timedelta(nums * 30)
+                #                     prev_date = prev_date.strftime("%b, %Y")
+                #                     resultant.append(prev_date + '-' + datestring)
+                #
+                #                 if nums == 6:
+                #                     prev_date = date_obj - \
+                #                                 datetime.timedelta(nums * 30)
+                #                     prev_date = prev_date.strftime("%b, %Y")
+                #                     resultant.extend([prev_date + '-' + datestring])
+                #
+                #                 if nums == 9:
+                #                     prev_date = date_obj - \
+                #                                 datetime.timedelta(nums * 30)
+                #                     prev_date = prev_date.strftime("%b, %Y")
+                #                     resultant.extend([prev_date + '-' + datestring])
+                #
+                #                 if nums == 12:
+                #                     prev_date = date_obj - \
+                #                                 datetime.timedelta(nums * 30)
+                #                     prev_date = prev_date.strftime("%b, %Y")
+                #                     resultant.extend([prev_date + '-' + datestring])
 
                 resultant.sort()
-                # print("Year List:", year_list)
-                if len(month_num) != 0 and len(resultant) > 0:
-                    for dictionaries in unstruct_data:
-                        for key in dictionaries.keys():
-                            if key != '':
-                                length = len(dictionaries[key])
-                                while length < len(resultant):
-                                    rem = len(resultant) - length
-                                    for i in range(rem):
-                                        dictionaries[key].insert(i, 0)
-                                    length = len(dictionaries[key])
-
-                    for idx in range(len(resultant)):
-                        temp_list = []
-                        for dic in unstruct_data:
-                            for key in dic.keys():
-                                if key != '':
-                                    temp_list.append({key: dic[key][idx]})
-                        final_json[resultant[idx]] = temp_list
-
-                elif year_list != None:
+                print("Year_list before reversal:", year_list)
+                # year_list.reverse()
+                print("Final Year List:", year_list)
+                # if len(month_num) != 0 and len(resultant) > 0:
+                #     for dictionaries in unstruct_data:
+                #         for key in dictionaries.keys():
+                #             if key != '':
+                #                 length = len(dictionaries[key])
+                #                 while length < len(resultant):
+                #                     rem = len(resultant) - length
+                #                     for i in range(rem):
+                #                         dictionaries[key].insert(i, 0)
+                #                     length = len(dictionaries[key])
+                #
+                #     for idx in range(len(resultant)):
+                #         temp_list = []
+                #         for dic in unstruct_data:
+                #             for key in dic.keys():
+                #                 if key != '':
+                #                     temp_list.append({key: dic[key][idx]})
+                #         final_json[resultant[idx]] = temp_list
+                print("Unstruct data before 0's replacements:", unstruct_data)
+                if year_list != None:
                     for dictionaries in unstruct_data:
                         for key in dictionaries.keys():
                             if key != '':
@@ -324,7 +323,7 @@ def image_to_text(OCR_path, *args):
                                         dictionaries[key].insert(i, 0)
                                     length = len(dictionaries[key])
 
-                    # print(unstruct_data)
+                    print("Unstruct_data after the 0's replacement:", unstruct_data)
                     for idx in range(len(year_list)):
                         temp_list = []
                         for dic in unstruct_data:
@@ -365,25 +364,28 @@ def image_to_text(OCR_path, *args):
 
                 # print(final_json)
 
-                image = cv2.resize(images, None, fx=0.48, fy=0.35)
-                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                threshold_img = cv2.adaptiveThreshold(
-                    gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
-                cv2.imshow('Grayscale', threshold_img)
-                cv2.imwrite('bhel_bs.jpeg', threshold_img)
-                cv2.waitKey(0)
+                # image = cv2.resize(images, None, fx=0.48, fy=0.35)
+                # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                # threshold_img = cv2.adaptiveThreshold(
+                #     gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 81, 15)
+                # cv2.imshow('Grayscale', threshold_img)
+                # cv2.imwrite('bhel_bs.jpeg', threshold_img)
+                # cv2.waitKey(0)
+                #
+                # # Window shown waits for any key pressing event
+                # cv2.destroyAllWindows()
 
-                # Window shown waits for any key pressing event
-                cv2.destroyAllWindows()
-
-        # print(master_list)
+        print(master_list)
         return master_list
 
 
 #
-pdf_file = "tcs.pdf"  # Replace with your PDF file path
+pdf_file = "input_pdf/zomato.pdf"  # Replace with your PDF file path
 path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
 output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
 img = pdf_to_jpg(pdf_file, output_folder)
-# #
-(image_to_text(path_ocr, img))
+
+line_items = (image_to_text(path_ocr, img))
+
+with open('line_items_ups_cf.json', 'w') as json_file:
+    json.dump(line_items, json_file)
