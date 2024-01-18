@@ -1,0 +1,366 @@
+{
+   "Sales": [
+        "Revenues",
+        "Sales Revenue",
+        "Income from Sales",
+        "Turnover",
+        "Sales Income",
+        "Gross Sales",
+        "Net Sales",
+        "Total Net Sales",
+        "Total Income",
+        "Total revenue"
+    ],
+    "Cost of Goods Sold": [
+        "Cost of Sales",
+        "Cost of Revenues",
+        "Cost of Sales and Services",
+        "Direct Costs",
+        "COGS Expenses",
+        "Product Costs",
+        "COGS Deductions",
+        "COGS",
+        "Total Cost of Sales",
+        "Purchase of stock-in-trade",
+        "Change in inventories of stock-in-trade",
+        "Cost of materials and services consumed",
+        "Purchases of stock-in-trade",
+        "Changes in inventories of finished goods, stock-in-trade and work-in-progress",
+        "Cost of materials consumed",
+        "Changes in inventories of finished goods, work in progress and by-products",
+        "Cost of equipment and software licences"
+    ],
+     "Selling General and Administrative Expense": [
+        "Overhead Costs",
+        "Indirect Expenses",
+        "Non Production Expenses",
+        "Operating Expenditures",
+        "Administrative Costs",
+        "Selling Costs",
+        "General and Administrative",
+        "Sales and Marketing",
+        "Employee Benefits Expense",
+        "Employee benefits expense",
+        "Employee benefit expenses",
+        "General and administration expense",
+        "Employee compensation and benefits",
+        "Distribution and servicing costs"
+    ],
+     "Depreciation and Amortization": [
+        "Asset Valuation",
+        "Carrying Amount",
+        "Residual Value",
+        "Straight Line Depreciation",
+        "Declining Balance Depreciation",
+        "Intangible Asset Valuation",
+        "Accumulated Depreciation",
+        "Cost Allocation",
+        "Depreciation and Amortization",
+        "Depreciation and amortisation expenses",
+        "Depreciation and amortisation expense",
+        "Depreciation, amortization and impairment expenses",
+        "Amortization of intangible assets "
+    ],
+    "Operating Income": [
+        "Operating Profit",
+        "Operating Earnings",
+        "Earnings Before Interest and Taxes",
+        "Profit from Operations",
+        "Operating Profit Margin",
+        "Net Income",
+        "Gross Profit",
+        "Operating Income",
+        "EBIT"
+    ],
+    "Interest Expense": [
+        "Interest Cost",
+        "Interest Payments",
+        "Debt Service",
+        "Finance Charges",
+        "Borrowing Costs",
+        "Loan Interest",
+        "Credit Rating",
+        "Interest Coverage Ratio",
+        "Interest Expense",
+        "Finance costs"
+    ],
+    "Operating Expense": [
+        "Operational Expenses",
+        "Operating Costs",
+        "Day-to-Day Expenses",
+        "Other expenses",
+        "Fuel cost",
+        "Electricity purchased for trading",
+        "Restructuring Charge"
+    ],
+    "Interest Income": [
+        "Interest Earnings",
+        "Interest Revenue",
+        "Interest Gains",
+        "Interest Income"
+    ],
+    "Income Tax Total": [
+       "Income Tax",
+        "Tax Liability",
+        "Tax Credits",
+        "Tax Planning",
+        "Tax Return",
+        "Tax Compliance",
+        "Tax Evasion",
+        "Provision for Income Tax",
+        "Total tax expense",
+        "Income tax expense"
+    ],
+    "Minority Interest": [
+        "Non controlling Interest",
+        "Equity Method",
+        "Consolidation",
+        "Controlling Interest",
+        "Subsidiary",
+        "Joint Venture",
+        "Ownership Dilution",
+        "Drag Along Rights",
+        "Net income loss attributable to noncontrolling interests"
+    ],
+    "EBIT Including Extraordinary Items": [
+        "Operating Income Including Extraordinary Items",
+        "Earnings Before Interest Taxes and Extraordinary Items",
+        "EBIT Including Extraordinary Items",
+        "Earnings Before Interest Taxes and Extraordinary Expenses",
+        "Earnings Before Interest and Extraordinary Items",
+        "Profit before exceptional items and tax"
+    ],
+    "Net Income": [
+        "Profit",
+        "Earnings",
+        "Income After Taxes",
+        "Net Earnings",
+        "Net Profit",
+        "Net Income (Loss)",
+        "Negative Earnings",
+        "Consolidated net income",
+        "Net Income",
+        "Profit for the year"
+    ],
+    "Extraordinary Items and Discontinued Operations": [
+        "Unusual Items",
+        "Exceptional Items",
+        "Extraordinary Gains or Losses",
+        "Anomalies",
+        "Special Charges",
+        "Non routine Items",
+        "Non ongoing Operations",
+        "Exceptional items"
+    ],
+    "Basic":[
+        "Basic Earnings per share",
+        "Basic"
+    ],
+    "Diluted":[
+        "Diluted Earnings per share" ,
+        "Diluted"
+    ],
+    "EPS": [
+        "Basic earnings per share",
+        "Profit Per Share",
+        "Income Per Share",
+        "Net Earnings Per Share",
+        "Earnings per Equity Share",
+        "Earnings / (loss) per equity share (INR) (face value of INR 1 each)",
+        "Earnings per share (Face value 1 each)",
+        "Earnings per equity share ",
+        "Earnings per equity share:- Basic and diluted ",
+        "Basic and diluted earnings per share "
+    ],
+    "Cash and Short-Term Investments": [
+        "Cash Equivalents",
+        "Short Term Financial Assets",
+        "Short Term Liquid Investments",
+        "Short Term Financial Holdings",
+        "Cash and cash equivalents",
+        "Other bank balances",
+        "Other balances with banks",
+        "Bank balances other than cash and cash equivalents"
+    ],
+    "Receivables": [
+        "Accounts Receivable",
+        "Outstanding Payments",
+        "Outstanding Receivables",
+        "Outstanding Invoices",
+        "Trade receivables"
+    ],
+    "Inventories": [
+        "Inventory Items",
+        "Goods on Hand",
+        "Inventories",
+        "Supplies"
+    ],
+    "Investments Current": [
+        "Short Term Investments",
+        "Marketable Securities",
+        "Temporary Investments",
+        "Marketable Financial Assets",
+        "Quick Investments",
+        "Investments"
+    ],
+    "Right Of use Assets":[
+       "Right-of-use assets"
+    ],
+
+    "Capital work in progress":[
+        "Capital work-in-progress"
+    ],
+
+    "Other Non-Current Assets":
+    [
+        "Other non-current assets"
+    ],
+
+    "Total non-current assets":[
+            "Total non-current assets"
+    ],
+    "Total Current Assets": [
+        "Aggregate Current Assets",
+        "Sum of Current Assets",
+        "All Current Assets",
+        "Total Current Assets",
+        "Total current assets"
+    ],
+    "Total Assets": [
+        "Aggregate Assets",
+        "Sum of all Assets",
+        "All Assets",
+        "Total Assets"
+    ],
+    "Total Current Liabilities": [
+        "Total Current Debts",
+        "Aggregate Current Liabilities",
+        "Comprehensive Current  Liabilities",
+        "Total Current Liabilities"
+    ],
+    "Total non-current liabilities": [
+      "Total non-current liabilities"
+    ],
+    "Total Liabilities":
+    [
+        "Total liabilities"
+    ],
+    "Equity share capital":[
+        "Equity share capital",
+        "Share capital"
+    ],
+
+    "Other Equity":[
+            "Other equity"
+    ],
+    "Retain Earnings":
+    [
+        "Other Equity"
+    ],
+    "Total Equity": [
+        "Total stockholders equity",
+        "Total shareholders equity",
+        "Total Equity"
+    ],
+    "Long term Debt": [
+        "Long term debt",
+        "Term debt",
+        "Borrowings"
+    ],
+    "Short term Debt": [
+        "Short term debt",
+        "Current Debt",
+        "Maturing Debt",
+        "Borrowings"
+    ],
+    "PPNNet": [
+        "Property and equipment, net",
+        "Net Property Plant and Equipment",
+        "Net Long-term Assets",
+        "Property plant and equipment net",
+        "Property,plant and equipment"
+    ],
+    "Intangible": [
+        "Non Physical Assets",
+        "Non Tangible Assets",
+        "Non Current Assets",
+        "Intangible",
+        "Intangible assets under development",
+        "Other intangible assets",
+        "Intangible assets"
+    ],
+    "Goodwill": [
+        "Goodwill"
+    ],
+    "Income before Tax": [
+        "Income loss before income taxes",
+        "Earnings Before Tax",
+        "Operating Income Before Tax",
+        "Pretax Earnings",
+        "Loss before tax",
+        "Profit before tax",
+        "Income before provision for income taxes",
+        "Income before income taxes"
+    ],
+    "Purchases": [
+        "Procurements",
+        "Buyings",
+        "Material Costs",
+        "Merchandise Costs",
+        "Inventory Purchases",
+        "Purchases"
+    ],
+    "Accounts Payable": [
+        "Creditors",
+        "Trade Payables",
+        "Payables",
+        "Trade Credit",
+        "Accounts Payable"
+    ],
+    "Cash in ops activity": [
+        "Net cash provided by used in operating activities",
+        "Operating Cash Flow",
+        "Cash Flow from Operating Activities",
+        "Cash Generated from Operations",
+        "Cash Flow from Business Operations",
+        "Net cash generated from used in operating activities",
+        "Net cash flow from operating activities",
+        "Net cash from operating activities",
+        "Net cash generated from operating activities",
+        "Net cash provided by used in operating activities",
+        "Net cash used in from operating activities"
+    ],
+    "Cash in Invest activity": [
+        "Net cash provided by used in investing activities",
+        "Investing Cash Flow",
+        "Cash Flow from Investments",
+        "Investment Activities Cash",
+        "Capital Investment Cash Flow",
+        "Net cash generated from used in investing activities",
+        "Net cash used in investing activities",
+        "Net cash generated from used in investing activities",
+        "Net cash provided by used in investing activities",
+        "Net cash used in from investing activities"
+    ],
+    "Cash in Financing activity": [
+         "Net cash generated from used in financing activities",
+         "Net cash generated from financing activities",
+         "Net cash used in financing activities",
+         "Net cash provided by used in financing activities",
+         "Net cash used in from financing activities "
+    ],
+    "Dividends Paid": [
+        "Dividends Paid",
+        "Dividends paid",
+        "Cash dividends paid",
+        "Dividend paid"
+    ],
+    "Exchange rate on cash and equivalence":[
+     "Net foreign exchange difference",
+     "Foreign exchange impact due to hyperinflation economy",
+     "Effect of exchange fluctuation translation reserve",
+     "Exchange fluctuation on foreign currency bank balances",
+     "Exchange difference on translation of foreign currency cash and cash equivalents",
+     "Effect of exchange rate changes on cash, cash equivalents and restricted cash"
+    ]
+}
