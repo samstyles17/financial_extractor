@@ -69,12 +69,12 @@ def enhance_image(image_array, alpha=1.5, beta=30):
     return enhanced_image
 
 
-def pdf_to_jpg(pdf_path, output_folder):
+def pdf_to_jpg(pdf_path):
     # Open the PDF file
     pdf_document = fitz.open(pdf_path, )
     images = []
     # arrays = []
-    jpg_folder = output_folder
+    # jpg_folder = output_folder
 
     # Iterate through each page in the PDF
     if len(pdf_document) > 1:
@@ -127,7 +127,7 @@ def extract_years_from_dates(date_list):
     return list(years)
 
 
-def image_to_text(OCR_path, *args):
+def image_to_text(OCR_path, *args,pg1,pg2):
 
     for arg in args:
 
@@ -141,7 +141,7 @@ def image_to_text(OCR_path, *args):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[64:65]):
+            for _, images in enumerate(arg[pg1:pg2]):
 
                 # img_array = img
                 # image = cv2.resize(images, None, fx=0.625, fy=0.625)
@@ -203,7 +203,7 @@ def image_to_text(OCR_path, *args):
                 prev_lookup = []
                 i = 0
                 for word_list in lines:
-                    # print(word_list)
+                    print("Word List:", word_list)
                     num_list = re.findall(num_pattern, word_list)
                     # print("Initial num list:", num_list)
                     num_list = [num.replace(',', '') for num in num_list]
@@ -380,12 +380,13 @@ def image_to_text(OCR_path, *args):
 
 
 #
-pdf_file = "input_pdf/zomato.pdf"  # Replace with your PDF file path
-path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
-output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
-img = pdf_to_jpg(pdf_file, output_folder)
-
-line_items = (image_to_text(path_ocr, img))
-
-with open('line_items_ups_cf.json', 'w') as json_file:
-    json.dump(line_items, json_file)
+# pdf_file = "input_pdf/AEP.pdf"  # Replace with your PDF file path
+# path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
+# output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
+# img = pdf_to_jpg(pdf_file, output_folder)
+#
+# line_items = (image_to_text(path_ocr, img))
+# print("Line items extracted:", line_items)
+#
+# with open('line_items_aep_pnl.json', 'w') as json_file:
+#     json.dump(line_items, json_file)

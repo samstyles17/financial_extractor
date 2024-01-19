@@ -9,9 +9,19 @@
         "Net Sales",
         "Total Net Sales",
         "Total Income",
-        "Total revenue"
+        "Total revenue",
+        "Total operating revenues"
     ],
-    "Cost of Goods Sold": [
+
+    "Fuel used": [
+        "Fuel used in electric generation and purchased power"
+    ],
+
+    "Cost of Natural gas": [
+        "Cost of natural gas"
+    ],
+
+  "Cost of Goods Sold": [
         "Cost of Sales",
         "Cost of Revenues",
         "Cost of Sales and Services",
@@ -59,7 +69,8 @@
         "Depreciation and amortisation expenses",
         "Depreciation and amortisation expense",
         "Depreciation, amortization and impairment expenses",
-        "Amortization of intangible assets "
+        "Amortization of intangible assets ",
+        "Depreciation and amortization"
     ],
     "Operating Income": [
         "Operating Profit",
@@ -67,11 +78,11 @@
         "Earnings Before Interest and Taxes",
         "Profit from Operations",
         "Operating Profit Margin",
-        "Net Income",
         "Gross Profit",
         "Operating Income",
         "EBIT"
     ],
+
     "Interest Expense": [
         "Interest Cost",
         "Interest Payments",
@@ -91,7 +102,8 @@
         "Other expenses",
         "Fuel cost",
         "Electricity purchased for trading",
-        "Restructuring Charge"
+        "Restructuring Charge",
+        "Total operating expenses"
     ],
     "Interest Income": [
         "Interest Earnings",
@@ -99,6 +111,7 @@
         "Interest Gains",
         "Interest Income"
     ],
+
     "Income Tax Total": [
        "Income Tax",
         "Tax Liability",
@@ -120,7 +133,7 @@
         "Joint Venture",
         "Ownership Dilution",
         "Drag Along Rights",
-        "Net income loss attributable to noncontrolling interests"
+        "Noncontrolling interests"
     ],
     "EBIT Including Extraordinary Items": [
         "Operating Income Including Extraordinary Items",
@@ -142,6 +155,19 @@
         "Net Income",
         "Profit for the year"
     ],
+
+     "Income before Tax": [
+        "Income loss before income taxes",
+        "Earnings Before Tax",
+        "Operating Income Before Tax",
+        "Pretax Earnings",
+        "Loss before tax",
+        "Profit before tax",
+        "Income before provision for income taxes",
+        "Income before income taxes",
+        "Income From Continuing Operations Before Income Taxes"
+    ],
+
     "Extraordinary Items and Discontinued Operations": [
         "Unusual Items",
         "Exceptional Items",
@@ -170,7 +196,11 @@
         "Earnings per share (Face value 1 each)",
         "Earnings per equity share ",
         "Earnings per equity share:- Basic and diluted ",
-        "Basic and diluted earnings per share "
+        "Basic and diluted earnings per share ",
+        "Basic and Diluted"
+    ],
+    "Other Income and expenses net": [
+        "Other income and expenses, net "
     ],
     "Cash and Short-Term Investments": [
         "Cash Equivalents",
@@ -180,7 +210,8 @@
         "Cash and cash equivalents",
         "Other bank balances",
         "Other balances with banks",
-        "Bank balances other than cash and cash equivalents"
+        "Bank balances other than cash and cash equivalents",
+        "Cash and cash equivalents"
     ],
     "Receivables": [
         "Accounts Receivable",
@@ -189,11 +220,20 @@
         "Outstanding Invoices",
         "Trade receivables"
     ],
+
+    "Receivables (net of allowance for doubtful accounts of $40 at 2022 and $45 at 2021)": [
+        "Receivables (net of allowance for doubtful accounts of $40 at 2022 and $45 at 2021)"
+    ],
+
+    "Receivables of VIEs (net of allowance for doubtful accounts of $176 at 2022 and $76 at 2021)": [
+        "Receivables of VIEs (net of allowance for doubtful accounts of $176 at 2022 and $76 at 2021)"
+    ],
     "Inventories": [
         "Inventory Items",
         "Goods on Hand",
         "Inventories",
-        "Supplies"
+        "Supplies",
+        "Inventory"
     ],
     "Investments Current": [
         "Short Term Investments",
@@ -202,6 +242,10 @@
         "Marketable Financial Assets",
         "Quick Investments",
         "Investments"
+    ],
+
+    "Non- current Investments": [
+        "Investments in equity method unconsolidated affiliates "
     ],
     "Right Of use Assets":[
        "Right-of-use assets"
@@ -217,8 +261,13 @@
     ],
 
     "Total non-current assets":[
-            "Total non-current assets"
+        "Total non-current assets"
     ],
+
+    "Total other non-current assets": [
+        "Total other noncurrent assets "
+    ],
+
     "Total Current Assets": [
         "Aggregate Current Assets",
         "Sum of Current Assets",
@@ -236,11 +285,18 @@
         "Total Current Debts",
         "Aggregate Current Liabilities",
         "Comprehensive Current  Liabilities",
-        "Total Current Liabilities"
+        "Total Current Liabilities",
+        "Total current liabilities"
     ],
+
+    "Total other noncurrent liabilities":[
+        "Total other noncurrent liabilities "
+    ],
+
     "Total non-current liabilities": [
       "Total non-current liabilities"
     ],
+
     "Total Liabilities":
     [
         "Total liabilities"
@@ -255,17 +311,37 @@
     ],
     "Retain Earnings":
     [
-        "Other Equity"
+        "Retained Earnings"
     ],
+    "Preferred stock Series A": [
+        "Preferred stock, Series A, $0.001 par value, 40 million depositary shares authorized and outstanding at 2022 and 2021"
+    ],
+
+    "Preferred stock Series B": [
+        "Preferred stock, Series B, $0.001 par value, 1 million shares authorized and outstanding at 2022 and 2021 "
+    ],
+
+    "Common stock": [
+        "Common stock, $0.001 par value, 2 billion shares authorized; 770 million and 769 million shares outstanding at 2022 and 2021"
+    ],
+
     "Total Equity": [
         "Total stockholders equity",
         "Total shareholders equity",
         "Total Equity"
     ],
+
+    "Total liabilities and equity": [
+        "Total Liabilities and Equity"
+    ],
     "Long term Debt": [
         "Long term debt",
         "Term debt",
-        "Borrowings"
+        "Borrowings",
+        "Long-Term Debt (includes $3,108 at 2022 and $3,379 at 2021 related to VIEs)"
+    ],
+    "Notes payable and commercial paper": [
+        "Notes payable and commercial paper"
     ],
     "Short term Debt": [
         "Short term debt",
@@ -278,7 +354,8 @@
         "Net Property Plant and Equipment",
         "Net Long-term Assets",
         "Property plant and equipment net",
-        "Property,plant and equipment"
+        "Property,plant and equipment",
+        "Net property, plant and equipment"
     ],
     "Intangible": [
         "Non Physical Assets",
@@ -292,16 +369,7 @@
     "Goodwill": [
         "Goodwill"
     ],
-    "Income before Tax": [
-        "Income loss before income taxes",
-        "Earnings Before Tax",
-        "Operating Income Before Tax",
-        "Pretax Earnings",
-        "Loss before tax",
-        "Profit before tax",
-        "Income before provision for income taxes",
-        "Income before income taxes"
-    ],
+
     "Purchases": [
         "Procurements",
         "Buyings",
@@ -328,7 +396,8 @@
         "Net cash from operating activities",
         "Net cash generated from operating activities",
         "Net cash provided by used in operating activities",
-        "Net cash used in from operating activities"
+        "Net cash used in from operating activities",
+        "Net cash provided by operating activities "
     ],
     "Cash in Invest activity": [
         "Net cash provided by used in investing activities",
@@ -340,20 +409,25 @@
         "Net cash used in investing activities",
         "Net cash generated from used in investing activities",
         "Net cash provided by used in investing activities",
-        "Net cash used in from investing activities"
+        "Net cash used in from investing activities",
+        "Net cash used in investing activities"
     ],
     "Cash in Financing activity": [
          "Net cash generated from used in financing activities",
          "Net cash generated from financing activities",
          "Net cash used in financing activities",
          "Net cash provided by used in financing activities",
-         "Net cash used in from financing activities "
+         "Net cash used in from financing activities",
+         "Net cash provided by financing activities"
     ],
     "Dividends Paid": [
         "Dividends Paid",
         "Dividends paid",
         "Cash dividends paid",
         "Dividend paid"
+    ],
+    "Add to Prop, Equip": [
+        "Capital expenditures "
     ],
     "Exchange rate on cash and equivalence":[
      "Net foreign exchange difference",
