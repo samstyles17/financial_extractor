@@ -127,7 +127,7 @@ def extract_years_from_dates(date_list):
     return list(years)
 
 
-def image_to_text(OCR_path, *args,pg1,pg2):
+def image_to_text(OCR_path, *args):
 
     for arg in args:
 
@@ -141,7 +141,7 @@ def image_to_text(OCR_path, *args,pg1,pg2):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[pg1:pg2]):
+            for _, images in enumerate(arg[302:303]):
 
                 # img_array = img
                 # image = cv2.resize(images, None, fx=0.625, fy=0.625)
@@ -153,7 +153,10 @@ def image_to_text(OCR_path, *args,pg1,pg2):
                 # Perform OCR to extract text from the image
                 text = pytesseract.image_to_string(
                     images, config=r'--psm 4')
-                # print("Text extracted from OCR:\n", text)
+                print("Text extracted from OCR:\n", text)
+                dash_pattern = r'(?<![a-zA-Z])- (?![a-zA-Z])'
+                text = re.sub(dash_pattern, ' 0 ', text)
+                print("text after replacing dashes with 0 in numbers:", text)
 
                 # Split the text into lines
                 lines = text.split('\n')
@@ -165,7 +168,7 @@ def image_to_text(OCR_path, *args,pg1,pg2):
 
                 date_pattern2 = r'\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|' \
                                 r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-zA-Z.,-]*[\s-]?\d{1,2}?[,\s-]?[\s]?\d{4}|' \
-                                r'\d{1,2}[/-]\d{4}|\d{4})\b'
+                                r'\d{1,2}[/-]\d{4}|\d{4})\b(?!-?\d{2,4})'
 
                 dates = []
                 for values in lines:
@@ -290,7 +293,11 @@ def image_to_text(OCR_path, *args,pg1,pg2):
                 #                     resultant.extend([prev_date + '-' + datestring])
 
                 resultant.sort()
-                print("Year_list before reversal:", year_list)
+                dummy = []
+                if all(isinstance(x, str) for x in year_list):
+                    dummy.extend(int(re.findall(r'\d+', year)[0]) for year in year_list)
+                    year_list = sorted(dummy, reverse = True)
+                # print("Year_list before reversal:", year_list)
                 # year_list.reverse()
                 print("Final Year List:", year_list)
                 # if len(month_num) != 0 and len(resultant) > 0:
@@ -327,9 +334,13 @@ def image_to_text(OCR_path, *args,pg1,pg2):
                     for idx in range(len(year_list)):
                         temp_list = []
                         for dic in unstruct_data:
-                            for key in dic.keys():
+                            for key, value in dic.items():
                                 if key != '':
-                                    temp_list.append({key: dic[key][idx]})
+                                    if len(value) > len(year_list):
+                                        s = len(value) - len(year_list) + idx
+                                        temp_list.append({key: value[s]})
+                                    else:
+                                        temp_list.append({key: value[idx]})
                         final_json[year_list[idx]] = temp_list
 
                 else:
@@ -380,13 +391,13 @@ def image_to_text(OCR_path, *args,pg1,pg2):
 
 
 #
-# pdf_file = "input_pdf/AEP.pdf"  # Replace with your PDF file path
-# path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
-# output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
-# img = pdf_to_jpg(pdf_file, output_folder)
-#
-# line_items = (image_to_text(path_ocr, img))
-# print("Line items extracted:", line_items)
-#
-# with open('line_items_aep_pnl.json', 'w') as json_file:
-#     json.dump(line_items, json_file)
+pdf_file = "input_pdf/ambuja.pdf"  # Replace with your PDF file path
+path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
+output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
+img = pdf_to_jpg(pdf_file)
+
+line_items = (image_to_text(path_ocr, img))
+print("Line items extracted:", line_items)
+
+with open('line_items_ambuja_pnl.json', 'w') as json_file:
+    json.dump(line_items, json_file)

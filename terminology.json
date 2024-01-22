@@ -54,8 +54,9 @@
         "Employee benefit expenses",
         "General and administration expense",
         "Employee compensation and benefits",
-        "Distribution and servicing costs"
-    ],
+        "Distribution and servicing costs",
+        "Employee costs"
+     ],
      "Depreciation and Amortization": [
         "Asset Valuation",
         "Carrying Amount",
@@ -70,7 +71,8 @@
         "Depreciation and amortisation expense",
         "Depreciation, amortization and impairment expenses",
         "Amortization of intangible assets ",
-        "Depreciation and amortization"
+        "Depreciation and amortization",
+        "Depreciation and amortisation expense"
     ],
     "Operating Income": [
         "Operating Profit",
@@ -153,7 +155,8 @@
         "Negative Earnings",
         "Consolidated net income",
         "Net Income",
-        "Profit for the year"
+        "Profit for the year",
+        "Loss for the year"
     ],
 
      "Income before Tax": [
@@ -197,7 +200,8 @@
         "Earnings per equity share ",
         "Earnings per equity share:- Basic and diluted ",
         "Basic and diluted earnings per share ",
-        "Basic and Diluted"
+        "Basic and Diluted",
+        "Basic"
     ],
     "Other Income and expenses net": [
         "Other income and expenses, net "
