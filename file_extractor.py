@@ -141,7 +141,7 @@ def image_to_text(OCR_path, *args):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[269:270]):
+            for _, images in enumerate(arg[302:303]):
 
                 # img_array = img
                 # image = cv2.resize(images, None, fx=0.625, fy=0.625)
@@ -154,10 +154,9 @@ def image_to_text(OCR_path, *args):
                 text = pytesseract.image_to_string(
                     images, config=r'--psm 4')
                 print("Text extracted from OCR:\n", text)
-                dash_pattern = r'(?<![a-zA-Z])[-:] ?(?![a-zA-Z0-9,]|\s[A-Z]|\n)'
-
-                # text = re.sub(dash_pattern, ' 0 ', text)
-                # print("text after replacing dashes with 0 in numbers:", text)
+                dash_pattern = r'(?<![a-zA-Z])- (?![a-zA-Z])'
+                text = re.sub(dash_pattern, ' 0 ', text)
+                print("text after replacing dashes with 0 in numbers:", text)
 
                 # Split the text into lines
                 lines = text.split('\n')
@@ -177,13 +176,13 @@ def image_to_text(OCR_path, *args):
                         dates.append(values)
 
                 # dates = re.findall(date_pattern, text)
-                # print("Dates extracted:", dates)
+                print("Dates extracted:", dates)
                 supp_dates = []
                 for date in dates:
                     if bool(re.search(r'[a-zA-Z]', date)) and bool(re.search(r'\d', date)):
                         supp_dates.append(date)
 
-                # print("Dates in supp_dates:", supp_dates)
+                print("Dates in supp_dates:", supp_dates)
 
                 duration_keywords = ['months', 'days', 'years']
 
@@ -209,7 +208,7 @@ def image_to_text(OCR_path, *args):
                 for word_list in lines:
                     print("Word List:", word_list)
                     num_list = re.findall(num_pattern, word_list)
-                    print("Initial num list:", num_list)
+                    # print("Initial num list:", num_list)
                     num_list = [num.replace(',', '') for num in num_list]
                     #                     print("Num replace list after comma:", num_list)
                     num_list = [
@@ -217,12 +216,9 @@ def image_to_text(OCR_path, *args):
                         for number in num_list]
                     #                     print("Num replace list after (): ", num_list)
                     word_list = re.sub(pattern, '', word_list)
-                    # print("Word List after substitution:", word_list)
                     word_list = word_list.split()
-                    # print("Word List after splitting:", word_list)
                     label = "_".join(
                         [word for word in word_list if word.isalpha()]).lower()
-                    # print("Label for the word in word_list:", label)
                     # print(num_list)
                     if len(num_list) != 0:
                         num_list = list(map(keep_int_or_float, num_list))
@@ -242,7 +238,6 @@ def image_to_text(OCR_path, *args):
                             print("Year list inside the loop in else condition:", year_list)
 
                         unstruct_data.append({label: num_list})
-                        # print("Unstruct data after each word in the word list:", unstruct_data)
                         # print(f"Unstruct Data {i+1} after year list if-else", unstruct_data)
                         # i+=1
 
@@ -323,7 +318,7 @@ def image_to_text(OCR_path, *args):
                 #                 if key != '':
                 #                     temp_list.append({key: dic[key][idx]})
                 #         final_json[resultant[idx]] = temp_list
-                # print("Unstruct data before 0's replacements:", unstruct_data)
+                print("Unstruct data before 0's replacements:", unstruct_data)
                 if year_list != None:
                     for dictionaries in unstruct_data:
                         for key in dictionaries.keys():
@@ -335,7 +330,7 @@ def image_to_text(OCR_path, *args):
                                         dictionaries[key].insert(i, 0)
                                     length = len(dictionaries[key])
 
-                    # print("Unstruct_data after the 0's replacement:", unstruct_data)
+                    print("Unstruct_data after the 0's replacement:", unstruct_data)
                     for idx in range(len(year_list)):
                         temp_list = []
                         for dic in unstruct_data:
@@ -391,22 +386,18 @@ def image_to_text(OCR_path, *args):
                 # # Window shown waits for any key pressing event
                 # cv2.destroyAllWindows()
 
-        # print(master_list)
+        print(master_list)
         return master_list
 
 
 #
-pdf_file = "input_pdf/zomato.pdf"  # Replace with your PDF file path
+pdf_file = "input_pdf/ambuja.pdf"  # Replace with your PDF file path
 path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
 output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
 img = pdf_to_jpg(pdf_file)
 
 line_items = (image_to_text(path_ocr, img))
-# print("Line items extracted:", line_items)
+print("Line items extracted:", line_items)
 
-# df = pd.DataFrame(line_items)
-# print(df)
-# df.to_csv('line_items_ambuja_bs.csv')
-#
-# with open('line_items_ambuja_bs.json', 'w') as json_file:
-#     json.dump(line_items, json_file, indent= 3)
+with open('line_items_ambuja_pnl.json', 'w') as json_file:
+    json.dump(line_items, json_file)
