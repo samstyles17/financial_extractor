@@ -141,7 +141,7 @@ def image_to_text(OCR_path, *args):
             final_json = {}
             master_list = []
 
-            for _, images in enumerate(arg[302:303]):
+            for _, images in enumerate(arg[267:268]):
 
                 # img_array = img
                 # image = cv2.resize(images, None, fx=0.625, fy=0.625)
@@ -391,7 +391,7 @@ def image_to_text(OCR_path, *args):
 
 
 #
-pdf_file = "input_pdf/ambuja.pdf"  # Replace with your PDF file path
+pdf_file = "input_pdf/zomato.pdf"  # Replace with your PDF file path
 path_ocr = r"C:\Program Files\Tesseract-OCR\tesseract.exe"  # Replace with your path
 output_folder = r"C:\Users\DELL\Desktop\pdf_extractor\jpg_folder"
 img = pdf_to_jpg(pdf_file)
